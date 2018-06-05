@@ -55,3 +55,19 @@ body{
     margin-left: 250px;
     margin-top: 2vh;
 }
+.videri-home{
+    height: 100vh;
+    width: 100vw;
+    background: white;
+}
+.nav-bar{
+    background: #246AC5;
+    color: white;
+    padding: 10px;
+}
+.videri-title{
+    font-size: 2em;
+}
+.user-email{
+    float:right;
+}

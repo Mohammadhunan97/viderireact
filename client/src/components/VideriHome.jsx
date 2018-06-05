@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
+import NavBar from './NavBar';
 
-let VideriHome = ({ logOut }) => (
-  <div>
-    <p>here is the home route with all available images and videos</p>
-    <button onClick={() => logOut()}>LogOut</button>
-  </div>
-)
+class VideriHome extends Component{
+  constructor(props){
+    super(props);
+    this.state = {}
+  }
+  render(){
+    return(
+      <div className="videri-home">
+        <a href="#" onClick={() => this.props.logOut()}>Log Out</a>
+        <NavBar />
+      </div>
+    )
+    
+  }
+}
 
 
 export default VideriHome;
