@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar';
+import FolderDisplay from './FolderDisplay';
 
 class VideriHome extends Component{
   constructor(props){
@@ -11,6 +12,7 @@ class VideriHome extends Component{
       <div className="videri-home">
         <a href="#" onClick={() => this.props.logOut()}>Log Out</a>
         <NavBar />
+        <FolderDisplay />
       </div>
     )
     
