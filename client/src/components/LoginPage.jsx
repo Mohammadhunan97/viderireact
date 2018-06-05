@@ -30,32 +30,44 @@ class LoginPage extends Component {
     
   }
   render(){
-    return(<div>
+    return(<div className="login-page">
       {
         this.state.loginErrors.map((error) => {
           return(<ErrorMessage errortext={error}/>)
         })
       }
-      <form>
-        <label htmlFor="username">ID:</label>
-        <input 
-          ref={(element) => {this.username = element}}
-          id="username"
-          type="text"
-          placeholder="username"
-          className="input-calm"
-        />
 
-        <label htmlFor="password">Password:</label>
-        <input 
-          ref={(element) => {this.password = element}}
-          id="password"
-          type="password"
-          placeholder="password"
-          className="input-calm"/>
-        
-        <button type="button" onClick={() => this.attemptLogin()}>Login</button>
-      </form>
+      <div className="login-container">
+        <p className="main-logo">
+          <span className="company-title">VIDERI</span> &nbsp; &nbsp;
+          <span>ORCHESTRATOR</span>
+        </p>
+        <p className="sign-in-text">SIGN IN</p>
+          <form className="login-form">
+            <label htmlFor="username">ID:</label>
+            <input 
+              ref={(element) => {this.username = element}}
+              id="username"
+              type="text"
+              placeholder="ID"
+              className="input-calm"
+            />
+
+            <label htmlFor="password">Password:</label>
+            <input 
+              ref={(element) => {this.password = element}}
+              id="password"
+              type="password"
+              placeholder="PASSWORD"
+              className="input-calm"/>
+            
+            <button
+              className="login-button" 
+              type="button" 
+              onClick={() => this.attemptLogin()}
+            >Login</button>
+          </form>
+      </div>
     </div>)
   }
 }
