@@ -5,7 +5,9 @@ class HomeContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: []
+            content: [],
+            selected_item: null,
+            item_is_selected: false
         }
     }
     static getDerivedStateFromProps(props,state){
@@ -29,15 +31,34 @@ class HomeContent extends Component {
             })
         })
     }
-    render() { console.log(this.state)
+    select_item(item){
+        this.setState({ selected_item: item, item_is_selected: true })
+    }
+    render() { console.log(this.state.item_is_selected)
         return (<div className="home-content">
             <p className="content-header">CONTENT: {(this.props.selected_folder).toUpperCase()}</p>
 
+           {  
+                this.state.item_is_selected?
+                <div className="selected-item">
+                    <a href="#">close</a>
+                    <img
+                        className="selected-img"
+                        src={this.state.selected_item}
+                    /> 
+                </div>
+                : null 
+
+            }
             <div className="content-container">
+
             {
                 this.state.content.map((item) => {
                     return(
-                        <div className="content-item">
+                        <div 
+                            className="content-item"
+                            onClick={() => this.select_item(item.largeImageURL)} 
+                        >
                             <img 
                                 src={item.previewURL}
                                 width="64px"

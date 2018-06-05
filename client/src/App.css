@@ -113,3 +113,14 @@ body{
 .original-poster{
     margin-left: 5px;
 }
+.selected-item{
+    max-width: 100vw;
+    overflow: hidden;
+    background: white;
+    border: 1px solid black;
+    padding: 20px;
+}
+.selected-img{
+    max-width: 80%;
+    display: block;
+}
