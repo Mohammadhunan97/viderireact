@@ -7,7 +7,7 @@ class PseudoAuth extends Component {
   constructor(props){
     super(props);
     that = this;
-    this.state = { isAuthenticated: true }
+    this.state = { isAuthenticated: false }
   }
   logIn(){ that.setState({ isAuthenticated: true }) }
   logOut(){ that.setState({ isAuthenticated: false }) }
