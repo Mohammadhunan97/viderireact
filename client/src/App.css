@@ -82,3 +82,34 @@ body{
     width: 48px;
     margin-right:50px;
 }
+.content-header{
+    font-weight: bolder;
+    margin-left: 5vw;
+}
+.home-content{
+    min-height: 80vh;
+    background-color: #eee;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+.content-container{
+    display: flex;
+    width: 60vw;
+    flex-wrap: wrap;
+    margin-left: 20vw;
+}
+.content-item{
+    background: white;
+    margin: 10px;
+    display: flex;
+    width: 200px;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 5px;
+}
+.content-item:hover{
+    background: #246AC5;
+}
+.original-poster{
+    margin-left: 5px;
+}

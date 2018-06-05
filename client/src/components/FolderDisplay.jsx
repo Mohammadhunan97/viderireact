@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Folder from "../folder.png";
 import FolderSelected from "../folderselected.png";
+import HomeContent from "./HomeContent";
 
 class FolderDisplay extends Component{
     constructor(props){
@@ -31,26 +32,33 @@ class FolderDisplay extends Component{
             <div className="folders-container">
             {
                 this.state.folders.map((folderitem) => {
-                    return(<div className="folder-item" onClick={() => this.selectFolder(folderitem.name)}>
+                    return(<div 
+                        className="folder-item"
+                        onClick={() => this.selectFolder(folderitem.name)}
+                        key={"div" + folderitem.name}
+                        >
                     {
                         this.state.selected_folder == folderitem.name? 
                         <img 
                             src={FolderSelected}
                             alt={folderitem.name}
                             className="folder"
+                            key={"img" + folderitem.name}
                         /> :
                         <img 
                             src={Folder}
                             alt={folderitem.name}
                             className="folder"
+                            key={"img" + folderitem.name}
                         />
                 
                     } 
-                        <p>{folderitem.name}</p>
+                        <p key={"p" + folderitem.name}>{folderitem.name}</p>
                     </div>)
                 })
             }
             </div>
+            <HomeContent selected_folder={this.state.selected_folder}/>
         </div>)
     }
 }
