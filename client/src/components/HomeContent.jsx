@@ -34,6 +34,9 @@ class HomeContent extends Component {
     select_item(item){
         this.setState({ selected_item: item, item_is_selected: true })
     }
+    deselect_item(){
+        this.setState({ selected_item: null, item_is_selected: false})
+    }
     render() { console.log(this.state.item_is_selected)
         return (<div className="home-content">
             <p className="content-header">CONTENT: {(this.props.selected_folder).toUpperCase()}</p>
@@ -41,7 +44,7 @@ class HomeContent extends Component {
            {  
                 this.state.item_is_selected?
                 <div className="selected-item">
-                    <a href="#">close</a>
+                    <a href="#" onClick={() => this.deselect_item()}>close</a>
                     <img
                         className="selected-img"
                         src={this.state.selected_item}
