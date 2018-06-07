@@ -18,10 +18,14 @@ class HomeContent extends Component {
         fetch(`https://pixabay.com/api/?key=${key.pixabay}&q=${props.selected_folder}`).then((results) => {
             results.json().then((data) => {
                 data.hits.forEach((item) => {
+                    console.log(item)
                     let current_item = { 
                         largeImageURL: item.largeImageURL,
                         user: item.user,
-                        previewURL: item.previewURL
+                        previewURL: item.previewURL,
+                        width: item.imageWidth,
+                        height: item.imageHeight,
+                        likes: item.likes
                     }
                     content.push(current_item);
                 })
@@ -43,12 +47,17 @@ class HomeContent extends Component {
 
            {  
                 this.state.item_is_selected?
-                <div className="selected-item">
-                    <a href="#" onClick={() => this.deselect_item()}>close</a>
-                    <img
-                        className="selected-img"
-                        src={this.state.selected_item}
-                    /> 
+                <div>
+                    <button 
+                        className="close-selected"
+                        onClick={() => this.deselect_item()}
+                    > X </button>
+                    <div className="selected-item">
+                        <img
+                            className="selected-img"
+                            src={this.state.selected_item}
+                        /> 
+                    </div>
                 </div>
                 : null 
 
@@ -68,7 +77,17 @@ class HomeContent extends Component {
                                 height="64px"
                                 alt={this.props.selected_folder}
                             />
-                            <p className="original-poster">{item.user}</p>
+                            <div className="original-poster">
+                                <strong>
+                                    <p>{item.user}</p>
+                                </strong>
+                                {
+                                    item.width > 1200? 
+                                    <p>HD image</p> : <p>image</p>
+                                }
+                                <p>{item.width} X {item.height}</p>
+
+                            </div>
                         </div>
                     )
                 })
@@ -79,3 +98,9 @@ class HomeContent extends Component {
 }
  
 export default HomeContent;
+// largeImageURL: item.largeImageURL,
+// user: item.user,
+// previewURL: item.previewURL,
+// width: item.imageWidth,
+// height: item.imageHeight,
+// likes: item.likes
