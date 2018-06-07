@@ -3,26 +3,8 @@ import Folder from "../folder.png";
 import FolderSelected from "../folderselected.png";
 import HomeContent from "./HomeContent";
 import axios from 'axios';
+import ContentList from './ContentList';
 const key = require("../key");
-
-let folders = [
-    {
-        name: 'clouds',
-        type: 'photo'
-    },
-    {
-        name: 'cars',
-        type: 'photo'
-    },
-    {
-        name: 'Urban',
-        type: 'photo'
-    },
-    {
-        name: 'nyc',
-        type:'film'
-    }
-];
 
 class FolderDisplay extends Component{
     constructor(props){
@@ -49,7 +31,9 @@ class FolderDisplay extends Component{
                     type:'film',
                     content: []
                 }
-            ]
+            ],
+            selected_folder: 'clouds', //used to turn selected folder blue
+            selected_folder_index: 0 //used to give props to child component
         }
     }
     componentDidMount(){
@@ -79,7 +63,7 @@ class FolderDisplay extends Component{
                     return {
                         user: data.user,
                         duration: data.duration,
-                        preview: res.url,
+                        previewURL: res.url,
                         width: data.videos.large.width,
                         height: data.videos.large.height,
                         url: data.videos.large.url,
@@ -111,30 +95,17 @@ class FolderDisplay extends Component{
         })
         this.setState({ folders,})
     }
-    async createFilmFromHit(item){
-        axios(`https://i.vimeocdn.com/video/${item.picture_id}_100x75.jpg`).then((res) => {
-            return {
-                user: item.user,
-                duration: item.duration,
-                preview: res.url,
-                width: item.videos.large.width,
-                height: item.videos.large.height,
-                url: item.videos.large.url,
-                type: "film"
-            }
-        })
+    selectFolder(name,index){
+        this.setState({ selected_folder: name, selected_folder_index: index})
     }
-    selectFolder(name, type){
-        this.setState({ selected_folder: name, selected_type: type,})
-    }
-    render(){ console.log(this.state)
+    render(){
         return(<div className="folder-display">
             <div className="folders-container">
             {
-                this.state.folders.map((folderitem) => {
+                this.state.folders.map((folderitem,i) => {
                     return(<div 
                         className="folder-item"
-                        onClick={() => this.selectFolder(folderitem.name, folderitem.type)}
+                        onClick={() => this.selectFolder(folderitem.name, i)}
                         key={"div" + folderitem.name}
                         >
                     {
@@ -158,7 +129,9 @@ class FolderDisplay extends Component{
                 })
             }
             </div>
-            {/* <HomeContent selected_folder={this.state.selected_folder} selected_type={this.state.selected_type}/> */}
+            <ContentList 
+                content_folder={this.state.folders[this.state.selected_folder_index]} 
+            />     
         </div>)
     }
 }

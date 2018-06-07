@@ -86,7 +86,7 @@ body{
     font-weight: bolder;
     margin-left: 5vw;
 }
-.home-content{
+.home-content, .content-list{
     min-height: 80vh;
     background-color: #eee;
     margin-top: 20px;
@@ -106,7 +106,7 @@ body{
     display: -ms-flexbox;
     display: flex;
     width: 250px;
-    height: 100px;
+    height: 160px;
     border: 1px solid black;
     border-radius: 2px;
     padding: 5px;
@@ -131,7 +131,7 @@ body{
     -ms-flex-pack: center;
     justify-content: center;
 }
-.selected-img{
+.selected-img, .selected-film{
     max-width: 80%;
     display: block;
 }
