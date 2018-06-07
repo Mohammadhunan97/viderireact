@@ -7,18 +7,18 @@ class PseudoAuth extends Component {
   constructor(props){
     super(props);
     that = this;
-    this.state = { isAuthenticated: true }
+    this.state = { isAuthenticated: false, user_email: 'sampleemail@gmail.com' }
   }
-  logIn(){ that.setState({ isAuthenticated: true }) }
+  logIn(email){ that.setState({ isAuthenticated: true, user_email: email}) }
   logOut(){ that.setState({ isAuthenticated: false }) }
 
-  render(){
+  render(){ 
     const isAuthenticated = this.state.isAuthenticated;
     return(
       <div>
         {
           isAuthenticated? //if not authenticated yet, try to log in; if already logged in view home page
-            <VideriHome logOut={this.logOut}/>: <LoginPage logIn={this.logIn} />
+            <VideriHome logOut={this.logOut} user_email={this.state.user_email}/>: <LoginPage logIn={this.logIn} />
         }
       </div>
     )

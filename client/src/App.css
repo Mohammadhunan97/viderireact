@@ -149,3 +149,11 @@ body{
     border: none;
     font-weight: 100;
 }
+.logout-footer{
+    background: rgb(55,55,55);
+    color: rgb(220,220,220);
+    height: 100px;
+    display: block;
+    font-size: 3em;
+    width: 100vw;
+}

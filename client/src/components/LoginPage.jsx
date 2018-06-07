@@ -16,7 +16,7 @@ class LoginPage extends Component {
 
 
     if(emailValidated && passwordValidated){
-      this.props.logIn();
+      this.props.logIn(this.username.value); //eventually is passed to the navbar
     }else if(emailValidated && !passwordValidated){
       /* email is correct; password is incorrect */
       this.setState({ loginErrors: [passwordErrorMessage] })

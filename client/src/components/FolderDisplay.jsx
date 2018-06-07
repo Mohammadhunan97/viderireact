@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Folder from "../folder.png";
 import FolderSelected from "../folderselected.png";
-import HomeContent from "./HomeContent";
 import axios from 'axios';
 import ContentList from './ContentList';
 const key = require("../key");

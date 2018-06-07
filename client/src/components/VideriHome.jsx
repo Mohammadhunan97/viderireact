@@ -10,9 +10,13 @@ class VideriHome extends Component{
   render(){
     return(
       <div className="videri-home">
-        <a href="#" onClick={() => this.props.logOut()}>Log Out</a>
-        <NavBar />
+        <NavBar user_email={this.props.user_email} />
         <FolderDisplay />
+        <a
+          className="logout-footer"
+          href="#"
+          onClick={() => this.props.logOut()}
+        >Log Out</a>
       </div>
     )
     
