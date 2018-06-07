@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import SelectedImage from './SelectedImage';
 const key = require('../key');
+let that;
 
 class HomeContent extends Component {
     constructor(props) {
         super(props);
+        that = this;
         this.state = {
             content: [],
             selected_item: null,
@@ -39,7 +42,7 @@ class HomeContent extends Component {
         this.setState({ selected_item: item, item_is_selected: true })
     }
     deselect_item(){
-        this.setState({ selected_item: null, item_is_selected: false})
+        that.setState({ selected_item: null, item_is_selected: false})
     }
     render() { console.log(this.state.item_is_selected)
         return (<div className="home-content">
@@ -47,18 +50,10 @@ class HomeContent extends Component {
 
            {  
                 this.state.item_is_selected?
-                <div>
-                    <button 
-                        className="close-selected"
-                        onClick={() => this.deselect_item()}
-                    > X </button>
-                    <div className="selected-item">
-                        <img
-                            className="selected-img"
-                            src={this.state.selected_item}
-                        /> 
-                    </div>
-                </div>
+                <SelectedImage 
+                    deselect_item={this.deselect_item}
+                    imgpath={this.state.selected_item}
+                />
                 : null 
 
             }
