@@ -5,12 +5,23 @@ let ContentItem = ({item, selected_folder,select_item }) => (
       className="content-item"
       onClick={() => select_item(item.largeImageURL)}
     >
-      <img
-        src={item.previewURL}
-        width="64px"
-        height="64px"
-        alt={selected_folder}
-      />
+    {
+        item?
+        <img
+            src={item.previewURL}
+            width="64px"
+            height="64px"
+            alt={selected_folder}
+        /> :
+        <img
+            src=""
+            width="64px"
+            height="64px"
+            alt={selected_folder}
+        />
+
+    }
+
       <div className="original-poster">
         <strong>
           <p>{item.user}</p>

@@ -15,29 +15,62 @@ class HomeContent extends Component {
     };
   }
   static getDerivedStateFromProps(props, state) {
-      console.log('getderived')
     //return props;
     let content = [];
-    fetch(
-      `https://pixabay.com/api/?key=${key.pixabay}&q=${props.selected_folder}`
-    ).then(results => {
-      results.json().then(data => {
-        data.hits.forEach(item => {
-          let current_item = {
-            largeImageURL: item.largeImageURL,
+    console.log(props)
+    if(props.selected_type === "photo"){
+        fetch(
+            `https://pixabay.com/api/?key=${key.pixabay}&q=${props.selected_folder}`
+          ).then(results => {
+            results.json().then(data => {
+              data.hits.forEach(item => {
+                let current_item = that.createCurrentItemFromPhoto(item);
+                content.push(current_item);  
+              });
+              state.content = content;
+              return state;
+            });
+          });
+    }else if(props.selected_type === "film"){
+        fetch(
+            `https://pixabay.com/api/videos/?key=${key.pixabay}&q=${props.selected_folder}`
+          ).then(results => {
+            results.json().then(data => {
+              data.hits.forEach(item => {
+                let current_item = that.createCurrentItemFromVideo(item);
+                content.push(current_item);  
+              });
+              state.content = content;
+              return state;
+            });
+          });
+    }
+  }
+  createCurrentItemFromPhoto(item){
+    return {
+        largeImageURL: item.largeImageURL,
+        user: item.user,
+        previewURL: item.previewURL,
+        width: item.imageWidth,
+        height: item.imageHeight,
+        likes: item.likes,
+        type: "photo"
+    };
+  }
+  createCurrentItemFromVideo(item){
+    fetch(`https://i.vimeocdn.com/video/${item.picture_id}_100x75.jpg`).then((res) => {
+        return {
             user: item.user,
-            previewURL: item.previewURL,
-            width: item.imageWidth,
-            height: item.imageHeight,
-            likes: item.likes
-          };
-          content.push(current_item);
-        });
+            duration: item.duration,
+            preview: res.url,
+            width: item.videos.large.width,
+            height: item.videos.large.height,
+            url: item.videos.large.url,
+            type: "film"
+        }
 
-        state.content = content;
-        return state;
-      });
-    });
+    })
+
   }
   select_item(item) {
     that.setState({ selected_item: item, item_is_selected: true });
@@ -45,7 +78,7 @@ class HomeContent extends Component {
   deselect_item() {
     that.setState({ selected_item: null, item_is_selected: false });
   }
-  render() {
+  render() { console.log(this.state.content)
     return (
       <div className="home-content">
         <p className="content-header">CONTENT</p>
@@ -57,14 +90,19 @@ class HomeContent extends Component {
           />
         ) : null}
         <div className="content-container">
-          {this.state.content.map((item, i) => {
-            return (<ContentItem
-                key={"contentitem" + i}
-                item={item}
-                selected_folder={this.state.selected_folder}
-                select_item={this.select_item}
-            />);
-          })}
+          {/* {this.state.content.map((item,i) => {
+            return(<div key={"content-container-div" + i}>
+            {
+                item.type === "photo"? 
+                    <ContentItem
+                        key={"contentitem" + i}
+                        item={item}
+                        selected_folder={this.state.selected_folder}
+                        select_item={this.select_item}
+                    />: null
+            }
+            </div>)
+          })} */}
         </div>
       </div>
     );
