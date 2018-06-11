@@ -5,8 +5,8 @@ import axios from 'axios';
 import ContentList from './ContentList';
 const key = require("../key");
 
-class FolderDisplay extends Component{
-    constructor(props){
+class FolderDisplay extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             folders: [
@@ -27,7 +27,7 @@ class FolderDisplay extends Component{
                 },
                 {
                     name: 'nyc',
-                    type:'film',
+                    type: 'film',
                     content: []
                 }
             ],
@@ -35,18 +35,18 @@ class FolderDisplay extends Component{
             selected_folder_index: 0 //used to give props to child component
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.state.folders.forEach((folder) => {
-            if(folder.type === "photo"){
-               this.getPhoto(folder.name)
-            }else if(folder.type === "film"){
+            if (folder.type === "photo") {
+                this.getPhoto(folder.name)
+            } else if (folder.type === "film") {
                 this.getFilm(folder.name);
             }
         })
-        
+
     }
-    getPhoto(foldername){
-        axios.get(`https://pixabay.com/api/?key=${key.pixabay}&q=${foldername}`).then((data) =>{
+    getPhoto(foldername) {
+        axios.get(`https://pixabay.com/api/?key=${key.pixabay}&q=${foldername}`).then((data) => {
             let content = [];
             data.data.hits.forEach((hit) => {
                 let current_item = this.createPhotoFromHit(hit);
@@ -55,18 +55,33 @@ class FolderDisplay extends Component{
             this.setContentForFolder(foldername, content);
         })
     }
-    getFilm(foldername){
+    getFilm(foldername) {
         axios.get(`https://pixabay.com/api/videos/?key=${key.pixabay}&q=${foldername}`).then((data) => {
             Promise.all(data.data.hits.map(data => {
                 return fetch(`https://i.vimeocdn.com/video/${data.picture_id}_100x75.jpg`).then((res) => {
+                    
+                    let url = data.userImageURL;
+                    let previewURL = data.previewURL;
+            
+    
+                    let full_date = url.split("/")[4] + "/" + url.split("/")[5] + "/" + url.split("/")[6];
+
+
+                    let data_values = data.videos.large.url.split("/");
+                    let title = data.user + ".mp4";
+                    if(data_values.length >= 4){
+                        title = data_values[4].split("?")[0];
+                    }
                     return {
+                        title: title,
                         user: data.user,
                         duration: data.duration,
                         previewURL: res.url,
                         width: data.videos.large.width,
                         height: data.videos.large.height,
                         url: data.videos.large.url,
-                        type: "film"
+                        type: "film",
+                        full_date: full_date
                     }
                 })
             })).then((content) => {
@@ -74,7 +89,12 @@ class FolderDisplay extends Component{
             })
         })
     }
-    createPhotoFromHit(item){
+    createPhotoFromHit(item) {
+        let url = item.userImageURL;
+        let previewURL = item.previewURL;
+
+        let title = previewURL.split("/")[previewURL.split("/").length - 1];
+        let full_date = url.split("/")[4] + "/" + url.split("/")[5] + "/" + url.split("/")[6];
         return {
             largeImageURL: item.largeImageURL,
             user: item.user,
@@ -82,55 +102,59 @@ class FolderDisplay extends Component{
             width: item.imageWidth,
             height: item.imageHeight,
             likes: item.likes,
-            type: "photo"
+            type: "photo",
+            full_date,
+            title,
         };
     }
-    setContentForFolder(foldername,content){
+    setContentForFolder(foldername, content) {
         let folders = this.state.folders;
         folders.forEach((folder) => {
-            if(folder.name === foldername){
+            if (folder.name === foldername) {
                 folder.content = content;
             }
         })
-        this.setState({ folders,})
+        this.setState({ folders, })
     }
-    selectFolder(name,index){
-        this.setState({ selected_folder: name, selected_folder_index: index})
+    selectFolder(name, index) {
+        this.setState({ selected_folder: name, selected_folder_index: index })
     }
-    render(){
-        return(<div className="folder-display">
+    render() {
+        return (<div className="folder-display">
             <div className="folders-container">
-            {
-                this.state.folders.map((folderitem,i) => {
-                    return(<div 
-                        className="folder-item"
-                        onClick={() => this.selectFolder(folderitem.name, i)}
-                        key={"div" + folderitem.name}
+                {
+                    this.state.folders.map((folderitem, i) => {
+                        return (<div
+                            className="folder-item"
+                            onClick={() => this.selectFolder(folderitem.name, i)}
+                            key={"div" + folderitem.name}
                         >
-                    {
-                        this.state.selected_folder === folderitem.name? 
-                        <img 
-                            src={FolderSelected}
-                            alt={folderitem.name}
-                            className="folder"
-                            key={"img" + folderitem.name}
-                        /> :
-                        <img 
-                            src={Folder}
-                            alt={folderitem.name}
-                            className="folder"
-                            key={"img" + folderitem.name}
-                        />
-                
-                    } 
-                        <p key={"p" + folderitem.name}>{folderitem.name}</p>
-                    </div>)
-                })
-            }
+                            {
+                                this.state.selected_folder === folderitem.name ?
+                                    <img
+                                        src={FolderSelected}
+                                        alt={folderitem.name}
+                                        className="folder"
+                                        key={"img" + folderitem.name}
+                                    /> :
+                                    <img
+                                        src={Folder}
+                                        alt={folderitem.name}
+                                        className="folder"
+                                        key={"img" + folderitem.name}
+                                    />
+
+                            }
+                            <p key={"p" + folderitem.name}>{folderitem.name}</p>
+                        </div>)
+                    })
+                }
+            
             </div>
-            <ContentList 
-                content_folder={this.state.folders[this.state.selected_folder_index]} 
-            />     
+            <ContentList
+                content_folder={this.state.folders[this.state.selected_folder_index]}
+            />
+            
         </div>)
     }
 }

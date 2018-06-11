@@ -1,4 +1,18 @@
 import React from 'react';
+import HiRes from '../assets/hi-res.png';
+import VidPlaceholder from '../assets/video_placeholder.png';
+import ImagePlaceholder from '../assets/image_placeholder.png';
+
+let outputPlaceholderImageBasedOnWidth = (type) => {
+  switch(type){
+    case 'film':
+      return (<img src={VidPlaceholder} className="placeholder-item"/>)
+    default:
+      return (<img src={ImagePlaceholder} className="placeholder-item"/>)
+  }
+}
+
+
 
 let ContentItem = ({item,select_item, folder,}) => (
     <div
@@ -6,32 +20,31 @@ let ContentItem = ({item,select_item, folder,}) => (
       onClick={() => select_item(item)}
     >
       <img
+          className="preview-img"
           src={item.previewURL}
-          width="64px"
-          height="64px"
           alt={folder}
       />
-
       <div className="original-poster">
         <strong>
-          <p>{item.user}</p>
-        </strong>
+          <p className="content-text">{item.title}</p>
+        </strong> 
+        <div className="content-description">
+          {
+            outputPlaceholderImageBasedOnWidth(item.type)
+          }
+          <br/>
+          <p>
+              {item.width} x {item.height}
+          </p>
+          <p className="context-text">
+            Created
+          </p>
+          <p>{item.full_date}</p>
+        </div>
+      </div>
 
-
-        {item.width > 1200 ? <p>HD image</p> : <p>image</p>}
-
-      {
-        item.type === "film"?
-          <div>
-            <p>FILM</p>
-            <p>Duration: {item.duration} seconds</p>
-          </div>
-          :
-          <p>PHOTO</p>
-      }
-        <p>
-          {item.width} X {item.height}
-        </p>
+      <div className="additional-flex">
+          <p>.</p>
       </div>
     </div>
 );

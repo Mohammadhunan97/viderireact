@@ -22,6 +22,7 @@ class ContentList extends Component {
     render() { console.log(this.state)
         return (<div className="content-list">
         <p className="content-header">CONTENT</p>
+        <br/>
 
         {
             this.state.item_is_selected ? 
@@ -54,7 +55,7 @@ class ContentList extends Component {
           })
         }
         </div>
-        
+        <br/><br/>
         </div>)
     }
 }

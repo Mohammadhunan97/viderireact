@@ -12,6 +12,7 @@ class VideriHome extends Component{
       <div className="videri-home">
         <NavBar user_email={this.props.user_email} />
         <FolderDisplay />
+    
         <a
           className="logout-footer"
           href="#"
