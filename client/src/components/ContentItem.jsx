@@ -24,6 +24,9 @@ let ContentItem = ({item,select_item, folder,}) => (
           src={item.previewURL}
           alt={folder}
       />
+            <div className="additional-flex">
+          <p>.</p>
+      </div>
       <div className="original-poster">
         <strong>
           <p className="content-text">{item.title}</p>
@@ -46,6 +49,13 @@ let ContentItem = ({item,select_item, folder,}) => (
       <div className="additional-flex">
           <p>.</p>
       </div>
+      <div className="additional-flex">
+          <p>.</p>
+      </div>
+      <div className="additional-flex">
+          <p>.</p>
+      </div>
+      
     </div>
 );
 

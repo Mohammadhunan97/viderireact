@@ -154,8 +154,8 @@ body{
     overflow: hidden;
 }
 .preview-img {
-    width: 45%;
-    height: 60%;
+    width: 100px;
+    height: auto;
     margin-top: 10%;
     margin-left: 3%;
 }
@@ -180,7 +180,8 @@ body{
     /* Custom, iPhone Retina */ 
     @media only screen and (min-width : 320px) {
         .preview-img{
-            width: 45%;
+    width: 100px;
+    height: auto;
         }
         .content-container{
             margin-left: 0%;
@@ -206,8 +207,8 @@ body{
     /* Extra Small Devices, Phones */ 
     @media only screen and (min-width : 480px) {
         .preview-img {
-            width: 45%;
-            height: 60%;
+            width: 100px;
+            height: auto;
             margin-top: 10%;
         }
         .folders-container {
